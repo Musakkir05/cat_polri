@@ -15,6 +15,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
+  {{-- datatable
+  <link rel="stylesheet" href="{{ asset('assets/DataTables/datatable.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/DataTables/Buttons-3.0.1/css/buttons.dataTables.css')}}"> --}}
+  {{-- Data Table --}}
+  <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
+  <link rel="stylesheet" href="{{asset('assets/plugins/summernote/summernote-bs4.min.css')}}">
+  <link rel="stylesheet" href="{{asset('assets/plugins/sweetalert2/sweetalert2.css')}}">
+
+
+
+  @stack('css')
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -65,65 +80,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </div>
       </div>
 
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('home')}}" class="nav-link {{(Request::is('home')==true ?'active':'')}}">
                   <i class="nav-icon fas fa-th"></i>
                   <p>Dashboard</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('siswa') }}" class="nav-link {{(Request::is('siswa/index')==true ?'active':'')}}">
                   <i class="nav-icon fas fa-users"></i>
                   <p>Siswa</p>
                 </a>
               </li>
-          <li class="nav-item menu-open">
-            
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Soal
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
+
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('soal')}}" class="nav-link {{(Request::is('soal/index')==true ?'active':'')}}">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Kercerdasan</p>
+                  <p>Soal</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Kepribadian</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Kecermatan</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+           
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-book"></i>
@@ -139,7 +121,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   </aside>
 
   @yield('content')
-
+  <footer class="main-footer">
+    <strong>Copyright &copy;2024 <a>Simulasi CAT-Polri</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 1.0.0
+    </div>
+  </footer>
+</div>
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
@@ -148,5 +137,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
+{{-- Data Table --}}
+<script src="{{ asset('assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+@stack('scripts')
 </body>
 </html>

@@ -90,4 +90,17 @@
   </div>
   <!-- /.content-wrapper -->
 
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+@push('scripts')
+    <script>
+      $(document).ready(function () {
+   
+      });
+    </script>
+@endpush
 @endsection
