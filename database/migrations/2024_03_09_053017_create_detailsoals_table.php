@@ -22,7 +22,8 @@ return new class extends Migration
             $table->longText('pilC');
             $table->longText('pilD');
             $table->longText('pilE');
-            $table->string('kunci_jawaban');
+            $table->string('kunci_jawaban1');
+            $table->string('kunci_jawaban2')->nullable();
             $table->decimal('score');
             $table->integer('id_user')->nullable();
             $table->string('paket', 35)->nullable();

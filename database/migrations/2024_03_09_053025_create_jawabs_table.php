@@ -13,14 +13,14 @@ return new class extends Migration
     {
         Schema::create('jawabs', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('no_soal_id', 15);
             $table->integer('id_soal');
             $table->integer('id_user');
             $table->integer('id_paket')->nullable();
             $table->string('nama', 255)->nullable();
-            $table->string('pilihan', 1);
-            $table->decimal('score');
-            $table->string('status', 1);
+            $table->string('pilihan1', 5);
+            $table->string('pilihan2', 5)->nullable();
+            $table->decimal('score')->nullable();
+            $table->string('status', 1)->nullable();
             $table->integer('revisi')->nullable();
             $table->timestamps();
         });

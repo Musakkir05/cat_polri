@@ -1,7 +1,7 @@
-{{-- @dd($SoalList) --}}
+
 <?php use Carbon\Carbon; ?> 
 @extends('layouts.app')
-@section('title','Soal')
+@section('title','Soal Kepribadian')
 @section('content')
 
   <!-- Content Wrapper. Contains page content -->
@@ -43,56 +43,14 @@
                         <input type="hidden" name="id_paket" value="{{request()->id}}">
                         <meta name="csrf-token" content="{{ csrf_token() }}">
                         <input type="hidden" name="sesi" value="{{ md5(rand(0000000000, mt_getrandmax())) }}">
-                        <textarea class="form-control textarea" name="soal"  placeholder="Soal"></textarea>
+                        <textarea class="form-control textarea" name="soal"  placeholder="soal"></textarea>
                       </div>
                     </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Pilihan A</label>
-                      <div class="col-sm-10">
-                        <textarea class="form-control textarea" name="pila" placeholder="Pilihan A"></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Pilihan B</label>
-                      <div class="col-sm-10">
-                        <textarea class="form-control textarea" name="pilb" placeholder="Pilihan B"></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Pilihan C</label>
-                      <div class="col-sm-10">
-                        <textarea class="form-control textarea" name="pilc" placeholder="Pilihan C"></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Pilihan D</label>
-                      <div class="col-sm-10">
-                        <textarea class="form-control textarea" name="pild" placeholder="Pilihan D"></textarea>
-                      </div>
-                      
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Pilihan E</label>
-                      <div class="col-sm-10">
-                        <textarea class="form-control textarea" name="pile" placeholder="Pilihan E"></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label">Kunci</label>
-                      <div class="col-sm-10">
-                        <div class="radio">
-                          <label><input type="radio" name="kunci" id="a" value="A"> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="b" value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="c" value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="d" value="D"> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="e" value="E"> Jawaban <b>E</b></label>
-                        </div>
-                      </div>
-                    </div>
+ 
                     <div class="form-group" style="margin-top: 15px">
-                      <label class="col-sm-2 control-label">Score</label>
+                      <label class="col-sm-2 control-label">Waktu</label>
                       <div class="col-sm-2">
-                        <input type="text" class="form-control numOnly" name="score" placeholder="Score">
+                        <input type="text" class="form-control numOnly" name="waktu" placeholder="Waktu">
                       </div>
                     </div>
                     <div class="form-group">
@@ -138,26 +96,25 @@
                 <thead>
                   <tr>  
                     <th>NO</th>
-                    <th>Soal</th>
-                    <th>Jenis</th>
-                    <th style="text-align: center;">Kunci</th>
-                    <th style="text-align: center;">Score</th>
+                    <th>Instruksi</th>
+          
+                    <th style="text-align: center;">Waktu</th>
                     <th style="text-align: center;">Status</th>
+                
                     <th style="text-align: center;">Aksi</th>
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach ($SoalList as $data)
+                    @foreach ($soalList as $key=>$data)
+                    
                     <tr>
                         <td>{!!$loop->iteration!!}</td>
                         <td>{!!$data->soal!!}</td>
-                        <td>{!!$data->jenis!!}</td>
-                        <td>{!!$data->kunci_jawaban!!}</td>
-                        <td>{!!$data->score!!}</td>
+                        <td>{!!$data->waktu!!}</td>
                         <td>{!!$data->status!!}</td>
                         <td style="text-align: center">
           
-                            <a href="/soal/aksi/edit/{{$data->id}}" class="btn-sm btn-primary" >Edit</a>
+                            <a href="/soal/kepribadian/edit/{{$data->id}}" class="btn-sm btn-primary" >Edit</a>
                             <a href="/edit-paket/{{$data->id}}" class="btn-sm btn-info">Detail</a>
                             <a href="javascript:void(0)" onclick="deleteSoal({{$data->id}})" class="btn-sm btn-danger">Hapus</a>
 
@@ -191,17 +148,9 @@
       $("#wrap-soal").slideToggle();
     });
         $('.textarea').summernote({
-		toolbar: [
-						['style', ['style']],
-				    ['font', ['bold', 'italic', 'underline', 'clear']],
-				    ['fontname', ['fontname']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'picture', 'hr']],
-            ['view', ['fullscreen', 'codeview']]
-        ],
-        height:100,
+
+        height:500,
+        
 				fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36', '48' , '64', '82', '150']
 	})
 
@@ -219,11 +168,10 @@
         $("#wrap-btn").hide();
         $("#loading-soal").show();
         var dataString = $("#form-soal").serialize();
-        // var dataString = 'tetst';
 
         $.ajax({
           type: "POST",
-          url: "{{ route("simpan_soal") }}",
+          url: "{{ url('/soal/kecermatan/index') }}",
           data: dataString,
           headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -231,11 +179,15 @@
           success: function(data) {
             $("#loading-soal").hide();
             $("#wrap-btn").show();
-            if (data == 'ok') {
-              $("#notif-soal").removeClass('alert alert-danger').addClass('alert alert-info').html("Soal berhasil disimpan.").show();
-              setInterval(function() {
-        location.reload();
-    }, 2000);
+            if (data == 'done') {
+              swal({
+                title: "Sukses!",
+                text: "Data berhasil ditambahkan",
+                icon: "success",
+            }).then(function() {
+                location.reload();
+            });
+             
             } else {
               $("#notif-soal").removeClass('alert alert-info').addClass('alert alert-danger').html(data).show();
             }
@@ -246,10 +198,19 @@
 
 </script>
 <script>
+$(document).ready(function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var successMessage = urlParams.get('success');
+    if (successMessage ) {
+        swal("Sukses!", successMessage, "success").then(function() {
+            // Setel ulang URL tanpa query string setelah mengklik OK pada alert
+            window.history.replaceState({}, document.title, window.location.pathname);
+        });
+    }
+});
       function deleteSoal(id){
         Swal.fire({
   title: "Apakah kamu yakin menghapus data ini?",
-  
   icon: "warning",
   showCancelButton: true,
   confirmButtonColor: "#3085d6",
@@ -258,7 +219,7 @@
 }).then((result) => {
   if (result.isConfirmed) {
     $.ajax({
-            url:'/soal/delete-soal/'+id,
+            url:'/soal/kecermatan/delete-soal/'+id,
             type : 'DELETE',
             data:{
               _token:$("input[name=_token]").val()
@@ -271,13 +232,17 @@
       title: "Deleted!",
       text: "Data telah terhapus.",
       icon: "success"
-    });
-    location.reload();
+    }).then(function() {
+                location.reload();
+            });
+    
+    
   }
 });
         
     
       }
+     
 </script>
 @endpush
 

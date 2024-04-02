@@ -39,7 +39,7 @@
                     <div class="col-sm-10">
                       <input type="hidden" name="id" value="{{$soal->id}}">
                       <!-- <input type="hidden" name="id_soal" value="N"> -->
-                      <input type="hidden" name="jenis" value="{{$soal->jenis}}">
+                      <input type="hidden" name="jenis" value="{{$soal->paket}}">
                       <input type="hidden" name="sesi" value="{{ md5(rand(0000000000, mt_getrandmax())) }}">
                       <textarea class="form-control textarea" name="soal" placeholder="Soal">{{$soal->soal}}</textarea>
                     </div>
@@ -179,7 +179,7 @@
     console.log(dataString);
     $.ajax({
       type: "POST",
-      url: "{{ route("edit-soal") }}",
+      url: "{{ url('soal/kepribadian/update')}}",
       data: dataString,
 
 
@@ -189,10 +189,10 @@
         $("#loading-soal").hide();
         $("#wrap-btn").show();
         if (data == 'ok') {
-          $("#notif-soal").removeClass('alert alert-danger').addClass('alert alert-info').html("Soal berhasil disimpan.").show();
-          setTimeout(() => {
-            window.location.href = "{{ url('soal/detailSoal/' . $soal->id) }}";
-          }, 3000);
+          var successMessage = "Soal berhasil diubah.";
+    window.location.href = "{{ url('soal/detailSoal/' . $soal->id_paket) }}?success=" + encodeURIComponent(successMessage);
+            
+         
 
         }else{
           $("#notif-soal").removeClass('alert alert-info').addClass('alert alert-danger').html(data).show();

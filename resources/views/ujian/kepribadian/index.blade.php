@@ -114,7 +114,6 @@
                                 <button class="btn btn-success {{ $soal[0]['jenis'] === 'Kecerdasan' ? '' : 'disabled' }}">Kecerdasan</button>
                                 <button type="button" class="btn  btn-success {{ $soal[0]['jenis'] === 'Kepribadian' ? '' : ' disabled'  }}">Kepribadian</button>
                                 <button type="button" class="btn  btn-success {{ $soal[0]['jenis'] === 'Kecermatan' ? '' : ' disabled'  }}">Kecermatan</button>
-                            <a href="/ujian/kepribadian/index"><button class="btn btn-primary">kepribadian</button></a>
                             </div>
                             
                           
@@ -245,7 +244,8 @@
 
 <script>
     $(document).ready(function () {
-        
+        var jawab = [];
+    var jawabanSiswa = {}; // Objek untuk menyimpan jawaban yang dipilih
      // Waktu awal dalam detik (90 menit)
      var waktuAwal = <?php echo $paket[0]['waktu'] ?> * 60; // 90 menit * 60 detik
 
@@ -280,8 +280,9 @@
         $('#no_soal_detail').html($this.attr('data-no'));
         var id_soal = $this.attr('data-id');
         var nomorSoal = $this.attr('data-no');
+        console.log(id_soal);
         $('#no_soal_detail').html(nomorSoal + '.');
-        if (jawabanSiswa[idSoal] && jawabanSiswa[idSoal].length > 0) {
+        if (jawabanSiswa[id_soal] && jawabanSiswa[id_soal].length > 0) {
             // Ubah warna latar belakang tombol menjadi hijau karena sudah ada jawaban yang dipilih
             $this.find('button').css({
                 "background-color": "#15C12C",
@@ -290,7 +291,7 @@
         }
         $.ajax({
             type: "GET",
-            url: "{{ url('/ujian/get-soal') }}?nomor_soal=" + nomorSoal + "&id_soal=" + id_soal,
+            url: "{{ url('/ujian/kepribadian/get-soal') }}?nomor_soal=" + nomorSoal + "&id_soal=" + id_soal,
             success: function (data) {
                 $('#wrap-soal').html(data);
                 currentSoalIndex = parseInt(nomorSoal);
@@ -340,8 +341,7 @@ $('#next').click(function () {
 
 
 
-    var jawab = [];
-    var jawabanSiswa = {}; // Objek untuk menyimpan jawaban yang dipilih
+ 
 
     $(document).on('click', ".jawab", function() {
     var $this = $(this);
@@ -356,7 +356,7 @@ $('#next').click(function () {
     }
 
     // Periksa apakah jumlah jawaban yang dipilih belum mencapai 2
-    if (jawabanSiswa[idSoal].length < 2 || jawabanSiswa[idSoal].includes(selectedOption)) {
+    if (jawabanSiswa[idSoal].length < 1 || jawabanSiswa[idSoal].includes(selectedOption)) {
         // Periksa apakah jawaban sudah dipilih sebelumnya
         if (jawabanSiswa[idSoal].includes(selectedOption)) {
             // Jika sudah dipilih, hapus dari daftar jawaban yang dipilih
@@ -380,13 +380,12 @@ $('#next').click(function () {
             }
             $.ajax({
                 type: "POST",
-                url: "{{ url('/ujian/simpan-jawaban') }}",
+                url: "{{ url('/ujian/kepribadian/simpan-jawaban') }}",
                 data: {
                     _token: '{{ csrf_token() }}',
                     id_soal: idSoal,
                     id_paket: idPaket,
                     jawaban1: (jawabanSiswa[idSoal].length >= 1) ? jawabanSiswa[idSoal][0] : null,
-        jawaban2: (jawabanSiswa[idSoal].length === 2) ? jawabanSiswa[idSoal][1] : null
                     
                 },
                
@@ -408,14 +407,13 @@ $('#next').click(function () {
             // Kirim data ke controller menggunakan AJAX
             $.ajax({
                 type: "POST",
-                url: "{{ url('/ujian/simpan-jawaban') }}",
+                url: "{{ url('/ujian/kepribadian/simpan-jawaban') }}",
                 data: {
                     _token: '{{ csrf_token() }}',
                     id_soal: idSoal,
                     id_paket: idPaket,
                     jawaban1: (jawabanSiswa[idSoal].length >= 1) ? jawabanSiswa[idSoal][0] : null,
-        jawaban2: (jawabanSiswa[idSoal].length === 2) ? jawabanSiswa[idSoal][1] : null
-                    
+     
                 },
                
             });

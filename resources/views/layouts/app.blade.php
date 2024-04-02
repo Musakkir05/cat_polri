@@ -7,6 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="crsf-token" content="{{csrf_token()}}">
   <title>@yield('title')</title>
 
   <!-- Google Font: Source Sans Pro -->
@@ -63,9 +64,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ route('home') }}" class="brand-link">
-      <img src="{{ asset('assets/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">{{ $title ?? "Laradminlte" }}</span>
+    <a href="{{ route('home') }}" class="brand-link text-center">
+     
+      <span class="brand-text font-weight-light">{{ $title ?? "CAT POLRI" }}</span>
     </a>
 
     <!-- Sidebar -->

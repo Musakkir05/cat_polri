@@ -10,12 +10,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Starter Page</h1>
+          <h1 class="m-0">Siswa</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Starter Page</li>
+            <li class="breadcrumb-item"><a href="#">Siswa</a></li>
+            <li class="breadcrumb-item active">Home</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -32,7 +32,7 @@
           <!-- /.card-header -->
           <div class="card-body">
             <div class="justify-content-start">
-              <a href="{{route('tambah-siswa')}}" class="btn btn-secondary">Tambah siswa</a>
+              <a href="{{route('tambah-siswa')}}" class="btn btn-primary">Tambah siswa</a>
             </div>
             <table id="example1" class="table table-bordered table-striped">
               <thead>
@@ -54,7 +54,7 @@
                 <td>{{$data->status}}</td>
                 <td>{{$data->email}}</td>
                 <td><div class="text-center">
-                  <a href="edit_siswa/{{$data->id}}" class="btn btn-primary">Edit</a><a href="siswa-delete/{{$data->id}}" class="btn btn-danger">Delete</a>
+                  <a href="edit_siswa/{{$data->id}}" class="btn-sm btn-info">Edit</a><a href="siswa-delete/{{$data->id}}" class="btn-sm btn-danger">Delete</a>
                 </div>
                 </td>
               </tr>

@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Starter Page</h1>
+            <h1 class="m-0">Soal</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -51,7 +51,7 @@
                 <td>{{$data->deskripsi}}</td>
                 <td>{{$data->kkm}}</td>
                 <td>{{$data->waktu}}</td>
-                <td><div class="button-container">
+                <td><div class="button-container text-center">
                   <a href="edit-paket/{{$data->id}}" class="btn-sm btn-info ">Edit</a><a href="detailSoal/{{$data->id}}" class="btn-sm btn-success">Detail</a>
                 </div>
                 </td>

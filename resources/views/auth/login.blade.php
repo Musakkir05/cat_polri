@@ -4,14 +4,14 @@
 <body class="hold-transition login-page">
     <div class="login-box">
       <div class="login-logo">
-        <a href="{{ route('home') }}"><b>{{ config('app.name', 'Laravel') }}</b> 1.0</a>
+        <a href="#"><b>Login</b></a>
       </div>
       <!-- /.login-logo -->
       <div class="card">
         <div class="card-body login-card-body">
-          <p class="login-box-msg">Sign in to start your session</p>
+          <p class="login-box-msg">Masukkan untuk memulai tes simulasi CAT-Polri</p>
 
-          <form action="login" method="post">
+          <form action="/login" method="post">
             @csrf
             <div class="input-group mb-3">
               <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Email">

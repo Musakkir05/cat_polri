@@ -1,7 +1,7 @@
-{{-- @dd($SoalList) --}}
+
 <?php use Carbon\Carbon; ?> 
 @extends('layouts.app')
-@section('title','Soal')
+@section('title','Soal Kepribadian')
 @section('content')
 
   <!-- Content Wrapper. Contains page content -->
@@ -147,7 +147,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach ($SoalList as $data)
+                    @foreach ($soalList as $key=>$data)
+                    
                     <tr>
                         <td>{!!$loop->iteration!!}</td>
                         <td>{!!$data->soal!!}</td>
@@ -157,7 +158,7 @@
                         <td>{!!$data->status!!}</td>
                         <td style="text-align: center">
           
-                            <a href="/soal/aksi/edit/{{$data->id}}" class="btn-sm btn-primary" >Edit</a>
+                            <a href="/soal/kepribadian/edit/{{$data->id}}" class="btn-sm btn-primary" >Edit</a>
                             <a href="/edit-paket/{{$data->id}}" class="btn-sm btn-info">Detail</a>
                             <a href="javascript:void(0)" onclick="deleteSoal({{$data->id}})" class="btn-sm btn-danger">Hapus</a>
 
@@ -191,16 +192,7 @@
       $("#wrap-soal").slideToggle();
     });
         $('.textarea').summernote({
-		toolbar: [
-						['style', ['style']],
-				    ['font', ['bold', 'italic', 'underline', 'clear']],
-				    ['fontname', ['fontname']],
-            ['fontsize', ['fontsize']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'picture', 'hr']],
-            ['view', ['fullscreen', 'codeview']]
-        ],
+
         height:100,
 				fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36', '48' , '64', '82', '150']
 	})
@@ -219,11 +211,10 @@
         $("#wrap-btn").hide();
         $("#loading-soal").show();
         var dataString = $("#form-soal").serialize();
-        // var dataString = 'tetst';
 
         $.ajax({
           type: "POST",
-          url: "{{ route("simpan_soal") }}",
+          url: "{{ url('/soal/kepribadian/index') }}",
           data: dataString,
           headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -231,11 +222,15 @@
           success: function(data) {
             $("#loading-soal").hide();
             $("#wrap-btn").show();
-            if (data == 'ok') {
-              $("#notif-soal").removeClass('alert alert-danger').addClass('alert alert-info').html("Soal berhasil disimpan.").show();
-              setInterval(function() {
-        location.reload();
-    }, 2000);
+            if (data == 'done') {
+              swal({
+                title: "Sukses!",
+                text: "Data berhasil ditambahkan",
+                icon: "success",
+            }).then(function() {
+                location.reload();
+            });
+             
             } else {
               $("#notif-soal").removeClass('alert alert-info').addClass('alert alert-danger').html(data).show();
             }
@@ -246,10 +241,19 @@
 
 </script>
 <script>
+$(document).ready(function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var successMessage = urlParams.get('success');
+    if (successMessage ) {
+        swal("Sukses!", successMessage, "success").then(function() {
+            // Setel ulang URL tanpa query string setelah mengklik OK pada alert
+            window.history.replaceState({}, document.title, window.location.pathname);
+        });
+    }
+});
       function deleteSoal(id){
         Swal.fire({
   title: "Apakah kamu yakin menghapus data ini?",
-  
   icon: "warning",
   showCancelButton: true,
   confirmButtonColor: "#3085d6",
@@ -271,13 +275,17 @@
       title: "Deleted!",
       text: "Data telah terhapus.",
       icon: "success"
-    });
-    location.reload();
+    }).then(function() {
+                location.reload();
+            });
+    
+    
   }
 });
         
     
       }
+     
 </script>
 @endpush
 

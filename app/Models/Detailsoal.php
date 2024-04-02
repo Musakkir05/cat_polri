@@ -18,9 +18,11 @@ class Detailsoal extends Model
         'pilC',
         'pilD',
         'pilE',
-        'kunci_jawaban',
+        'kunci_jawaban1',
+        'kunci_jawaban2',
         'score',
         'id_user',
+        'paket',
         'status'
     ];
 }
