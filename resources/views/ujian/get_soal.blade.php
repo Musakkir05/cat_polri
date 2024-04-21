@@ -29,7 +29,7 @@ else {
 </div>
 
 @if ($soal->pilA)
-<div class="jawab {{ $jawaban_siswa1 == 'A' || $jawaban_siswa2 == 'A' ? 'dijawab' : '' }}"
+<button class="jawab {{ $jawaban_siswa1 == 'A' || $jawaban_siswa2 == 'A' ? 'dijawab' : '' }}"
 paket-id="{{ $soal->id_paket }}"
 data-id="{{ $soal->id }}"
     data-jawab="A">
@@ -39,11 +39,11 @@ data-id="{{ $soal->id }}"
             <td valign="top" class="pilihan">{!! $soal->pilA !!}</td>
         </tr>
     </table>
-</div>
+</button>
 @endif
 
 <?php if ($soal->pilB) {?>
-	<div class="jawab {{ $jawaban_siswa1 == 'B' || $jawaban_siswa2 == 'B' ? 'dijawab' : '' }}"
+	<button class="jawab {{ $jawaban_siswa1 == 'B' || $jawaban_siswa2 == 'B' ? 'dijawab' : '' }}"
     paket-id="{{ $soal->id_paket }}"
     data-id="{{ $soal->id }}"
 		data-jawab="B">
@@ -53,10 +53,10 @@ data-id="{{ $soal->id }}"
 				<td valign="top" class="pilihan">{!! $soal->pilB !!}</td>
 			</tr>
 		</table>
-	</div>
+	</button>
 <?php } ?>
 <?php if ($soal->pilC) {?>
-	<div class="jawab {{ $jawaban_siswa1 == 'C' || $jawaban_siswa2 == 'C' ? 'dijawab' : '' }}"
+	<button class="jawab {{ $jawaban_siswa1 == 'C' || $jawaban_siswa2 == 'C' ? 'dijawab' : '' }}"
 	paket-id="{{ $soal->id_paket }}"
 		data-id="{{ $soal->id }}"
 		data-jawab="C">
@@ -66,10 +66,10 @@ data-id="{{ $soal->id }}"
 				<td valign="top" class="pilihan">{!! $soal->pilC !!}</td>
 			</tr>
 		</table>
-	</div>
+	</button>
 <?php } ?>
 <?php if ($soal->pilD) {?>
-	<div class="jawab {{ $jawaban_siswa1 == 'D' || $jawaban_siswa2 == 'D' ? 'dijawab' : '' }}"
+	<button class="jawab {{ $jawaban_siswa1 == 'D' || $jawaban_siswa2 == 'D' ? 'dijawab' : '' }}"
 	paket-id="{{ $soal->id_paket }}"
 		data-id="{{ $soal->id }}"
 		data-jawab="D">
@@ -79,10 +79,10 @@ data-id="{{ $soal->id }}"
 				<td valign="top" class="pilihan">{!! $soal->pilD !!}</td>
 			</tr>
 		</table>
-	</div>
+	</button>
 <?php } ?>
 <?php if ($soal->pilE) {?>
-	<div class="jawab {{ $jawaban_siswa1 == 'E' || $jawaban_siswa2 == 'E' ? 'dijawab' : '' }}"
+	<button class="jawab {{ $jawaban_siswa1 == 'E' || $jawaban_siswa2 == 'E' ? 'dijawab' : '' }}"
 		paket-id="{{ $soal->id_paket }}"
 		data-id="{{ $soal->id }}"
 		data-jawab="E">
@@ -92,5 +92,5 @@ data-id="{{ $soal->id }}"
 				<td valign="top" class="pilihan">{!! $soal->pilE !!}</td>
 			</tr>
 		</table>
-	</div>
+	</button>
 <?php } ?>

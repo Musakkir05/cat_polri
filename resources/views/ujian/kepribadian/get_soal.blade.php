@@ -5,19 +5,12 @@ if ($jawaban) {
     if ($jawaban->pilihan1) {
         $jawaban_siswa1 = $jawaban->pilihan1;
     }
-    if ($jawaban->pilihan2) {
-        $jawaban_siswa2 = $jawaban->pilihan2;
-    }
-    if ($jawaban->pilihan2=='') {
-        $jawaban_siswa2 = '';
-    }
     if ($jawaban->pilihan1=='') {
         $jawaban_siswa1 = '';
     }
 }
 else {
     $jawaban_siswa1 = '';
-    $jawaban_siswa2 = '';
 }
 ?>
 
@@ -29,7 +22,7 @@ else {
 </div>
 
 @if ($soal->pilA)
-<div class="jawab {{ $jawaban_siswa1 == 'A' || $jawaban_siswa2 == 'A' ? 'dijawab' : '' }}"
+<button class="jawab {{ $jawaban_siswa1 == 'A' ? 'dijawab' : '' }}"
 paket-id="{{ $soal->id_paket }}"
 data-id="{{ $soal->id }}"
     data-jawab="A">
@@ -39,11 +32,11 @@ data-id="{{ $soal->id }}"
             <td valign="top" class="pilihan">{!! $soal->pilA !!}</td>
         </tr>
     </table>
-</div>
+</button>
 @endif
 
 <?php if ($soal->pilB) {?>
-	<div class="jawab {{ $jawaban_siswa1 == 'B' || $jawaban_siswa2 == 'B' ? 'dijawab' : '' }}"
+	<button class="jawab {{ $jawaban_siswa1 == 'B' ? 'dijawab' : '' }}"
     paket-id="{{ $soal->id_paket }}"
     data-id="{{ $soal->id }}"
 		data-jawab="B">
@@ -53,10 +46,10 @@ data-id="{{ $soal->id }}"
 				<td valign="top" class="pilihan">{!! $soal->pilB !!}</td>
 			</tr>
 		</table>
-	</div>
+	</button>
 <?php } ?>
 <?php if ($soal->pilC) {?>
-	<div class="jawab {{ $jawaban_siswa1 == 'C' || $jawaban_siswa2 == 'C' ? 'dijawab' : '' }}"
+	<button class="jawab {{ $jawaban_siswa1 == 'C' ? 'dijawab' : '' }}"
 	paket-id="{{ $soal->id_paket }}"
 		data-id="{{ $soal->id }}"
 		data-jawab="C">
@@ -66,10 +59,10 @@ data-id="{{ $soal->id }}"
 				<td valign="top" class="pilihan">{!! $soal->pilC !!}</td>
 			</tr>
 		</table>
-	</div>
+	</button>
 <?php } ?>
 <?php if ($soal->pilD) {?>
-	<div class="jawab {{ $jawaban_siswa1 == 'D' || $jawaban_siswa2 == 'D' ? 'dijawab' : '' }}"
+	<button class="jawab {{ $jawaban_siswa1 == 'D' ? 'dijawab' : '' }}"
 	paket-id="{{ $soal->id_paket }}"
 		data-id="{{ $soal->id }}"
 		data-jawab="D">
@@ -79,18 +72,5 @@ data-id="{{ $soal->id }}"
 				<td valign="top" class="pilihan">{!! $soal->pilD !!}</td>
 			</tr>
 		</table>
-	</div>
-<?php } ?>
-<?php if ($soal->pilE) {?>
-	<div class="jawab {{ $jawaban_siswa1 == 'E' || $jawaban_siswa2 == 'E' ? 'dijawab' : '' }}"
-		paket-id="{{ $soal->id_paket }}"
-		data-id="{{ $soal->id }}"
-		data-jawab="E">
-		<table width="100%">
-			<tr>
-				<td width="15px" valign="top"><span>E.</span></td>
-				<td valign="top" class="pilihan">{!! $soal->pilE !!}</td>
-			</tr>
-		</table>
-	</div>
+	</button>
 <?php } ?>

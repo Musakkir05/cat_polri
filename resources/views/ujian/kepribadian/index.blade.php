@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{asset('assets/plugins/sweetalert2/sweetalert2.css')}}">
   <style>
     	.jawab {
             padding: 3px;
@@ -146,7 +147,7 @@
                         <ul class="pagination" style="margin-top: 5px !important;">
                         @foreach ($soal as $key_number=>$data_number)
                         
-                        <li class="no_soal" id="{{ 'nav'.$data_number->id }}" data-id="{{ $data_number->id }}" data-no="{{ $key_number+1 }}">
+                        <li style="pointer-events: none;" class="no_soal" id="{{ 'nav'.$data_number->id }}" data-id="{{ $data_number->id }}" data-no="{{ $key_number+1 }} " >
                             {{-- <a href="#" style="width: 40px !important;">{{ $key_number+1 }}</a> --}}
                         <button class="btn">{{ $key_number+1 }}</button>
                         </li>
@@ -165,7 +166,7 @@
                         @foreach ($soal as $keys =>$data)
                         
                        @if ($keys==0)
-                       <span class="detail_soal_id" style="display: none;">{{ $data->id }}</span>
+                       <span class="detail_soal_id" style="display: none; pointer-events: none;">{{ $data->id }}</span>
                       
                      
                       <div class="question-container">
@@ -208,14 +209,7 @@
 							</tr>
 						</table>
 					</button>' : '' !!}
-					{!! $data->pilE ? '<button class="jawab" paket-id="'.$data->id_paket.'" data-id="'.$data->id.'" data-jawab="E">
-						<table width="100%">
-							<tr>
-								<td width="15px" valign="top"><span>E.</span></td>
-								<td valign="top" class="pilihan">'.$data->pilE.'</td>
-							</tr>
-						</table>
-					</button>' : '' !!}
+				
 
                        @endif
                       
@@ -235,44 +229,117 @@
 
 
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
-
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ url('js/jquery.fullscreen-min.js') }}"></script>
 
 <script>
-    $(document).ready(function () {
-        var jawab = [];
-    var jawabanSiswa = {}; // Objek untuk menyimpan jawaban yang dipilih
-     // Waktu awal dalam detik (90 menit)
-     var waktuAwal = <?php echo $paket[0]['waktu'] ?> * 60; // 90 menit * 60 detik
+    function startTimer() {
+    // Waktu awal dalam detik (90 menit)
+    var waktuAwal = <?php echo $paket[0]['waktu'] ?> * 60; // 90 menit * 60 detik
 
     // Mulai countdown timer
     var timerInterval = setInterval(function() {
-         // Hitung jam, menit, dan detik dari waktu awal
+        // Hitung jam, menit, dan detik dari waktu awal
         var jam = Math.floor(waktuAwal / 3600);
         var sisaDetik = waktuAwal % 3600;
         var menit = Math.floor(sisaDetik / 60);
         var detik = sisaDetik % 60;
 
-         // Format waktu
-         var timerText = jam + ' : ' + menit + ' : ' + detik ;
+        // Format waktu
+        var timerText = jam + ' : ' + menit + ' : ' + detik;
 
         // Tampilkan timer di dalam elemen dengan id "timer"
-         document.getElementById('timer').innerHTML = timerText;
+        document.getElementById('timer').innerHTML = timerText;
 
-         // Kurangi waktu awal setiap detik
+        // Kurangi waktu awal setiap detik
         waktuAwal--;
 
-         // Cek apakah waktu telah habis
-         if (waktuAwal < 0) {
-             clearInterval(timerInterval); // Hentikan timer
-            document.getElementById('timer').innerHTML = 'Waktu habis!'; // Tampilkan pesan waktu habis
-             // Lakukan tindakan setelah waktu habis (misalnya, lanjut ke tes selanjutnya)
-         }
-     }, 1000); // Update timer setiap 1 detik (1000 milidetik)
+        // Cek apakah waktu telah habis
+        if (waktuAwal < 0) {
+            clearInterval(timerInterval); // Hentikan timer
+            document.getElementById('timer').innerHTML = 'Waktu habis!';
+            Swal.fire({
+                title: "Waktu Telah Habis",
+                text: "Waktu telah habis!",
+                icon: "warning",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showCancelButton: false, // Menyembunyikan tombol cancel (X)
+                showConfirmButton: true, // Menampilkan tombol OK
+                confirmButtonText: "OK",
+                backdrop: "static", // Tidak memungkinkan untuk menutup alert dengan mengklik di luar alert
+                keyboard: false, // Tidak memungkinkan untuk menutup alert dengan menekan tombol escape
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/ujian/kecermatan/index"; 
+                }
+            });
+        }
+    }, 1000); 
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+        function showCountdownAlert() {
+            Swal.fire({
+            title: 'Persiapan Tahap Kepribadian',
+            html: " <b></b> Detik.",
+            timer: 5000, // Waktu dalam milidetik (5 detik)
+            timerProgressBar: true,
+            icon: 'warning',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                var countdownTime = 5; // Hitung mundur dari 5 detik
+                var countdownInterval = setInterval(() => {
+                    timer.textContent = countdownTime;
+                    countdownTime--;
+                    if (countdownTime < 0) {
+                        clearInterval(countdownInterval); // Hentikan countdown saat mencapai 0
+                        startTimer(); // Memulai hitungan mundur waktu pengerjaan
+                        Swal.close(); // Tutup alert setelah countdown selesai
+                    }
+                }, 1000);
+            }
+        });
+    }
+
+    // Panggil fungsi showCountdownAlert saat halaman dimuat
+    showCountdownAlert();
+});
+
+    // Menambahkan event listener untuk peristiwa klik pada tombol "Next"
+    document.getElementById('next').addEventListener('click', function() {
+        mintaLayarPenuh();
+    });
+
+    // Fungsi untuk meminta mode layar penuh
+    function mintaLayarPenuh() {
+        var elemen = document.documentElement;
+        if (elemen.requestFullscreen) {
+            elemen.requestFullscreen();
+        } else if (elemen.mozRequestFullScreen) {
+            elemen.mozRequestFullScreen();
+        } else if (elemen.webkitRequestFullscreen) {
+            elemen.webkitRequestFullscreen();
+        } else if (elemen.msRequestFullscreen) {
+            elemen.msRequestFullscreen();
+        }
+    }
+    $(document).ready(function () {
+        var jawab = [];
+    var jawabanSiswa = {}; // Objek untuk menyimpan jawaban yang dipilih
 
      $(document).on('click', ".no_soal", function() {
         var $this = $(this);
@@ -280,7 +347,7 @@
         $('#no_soal_detail').html($this.attr('data-no'));
         var id_soal = $this.attr('data-id');
         var nomorSoal = $this.attr('data-no');
-        console.log(id_soal);
+     
         $('#no_soal_detail').html(nomorSoal + '.');
         if (jawabanSiswa[id_soal] && jawabanSiswa[id_soal].length > 0) {
             // Ubah warna latar belakang tombol menjadi hijau karena sudah ada jawaban yang dipilih
@@ -330,12 +397,25 @@ $('#next').click(function () {
             // Klik tombol navigasi soal berikutnya
             $nextSoalButton.click();
         } else {
-            // Tampilkan pesan jika elemen navigasi tidak ditemukan
-            alert('Elemen navigasi untuk soal berikutnya tidak ditemukan.');
+            
         }
     } else {
-        // Tampilkan pesan jika tidak ada soal berikutnya
-        alert('Soal telah habis.');
+         // Tampilkan pesan jika tidak ada soal berikutnya
+         Swal.fire({
+        title: "Apakah Kamu yakin?",
+        text: "Menyelesaikan tahapan ini?",
+        icon: "warning",
+        showCancelButton: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya,Selesai"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "/ujian/kecermatan/index";
+        }
+    });
     }
 });
 
@@ -349,12 +429,14 @@ $('#next').click(function () {
     var selectedOption = $this.attr('data-jawab');
     var idSoal = $this.attr('data-id');
     var idPaket = $this.attr('paket-id');
-
+    console.log(selectedOption);
+    console.log(idPaket);
+    console.log(idSoal);
     // Periksa apakah jawaban sudah dipilih sebelumnya
     if (!jawabanSiswa[idSoal]) {
         jawabanSiswa[idSoal] = []; // Inisialisasi array jawaban yang dipilih
     }
-
+    console.log(jawabanSiswa);
     // Periksa apakah jumlah jawaban yang dipilih belum mencapai 2
     if (jawabanSiswa[idSoal].length < 1 || jawabanSiswa[idSoal].includes(selectedOption)) {
         // Periksa apakah jawaban sudah dipilih sebelumnya
@@ -419,7 +501,26 @@ $('#next').click(function () {
             });
         }
     } else {
-        alert('Anda hanya bisa memilih dua jawaban.');
+          // Jika jumlah jawaban sudah mencapai batas (2 jawaban), ganti jawaban pertama dengan jawaban ketiga
+          var removedOption = jawabanSiswa[idSoal].shift();
+        $('button[data-id="' + idSoal + '"][data-jawab="' + removedOption + '"]').removeClass('dijawab').css('background-color', '#ffffff');
+        // Tambahkan jawaban ketiga ke daftar jawaban yang dipilih
+        jawabanSiswa[idSoal].push(selectedOption);
+        // Ubah warna tombol jawaban ketiga menjadi hijau ketika dipilih
+        $this.addClass('dijawab');
+        $this.css('background-color', '#15C12C');
+        // Kirim data ke controller menggunakan AJAX
+        $.ajax({
+            type: "POST",
+            url: "{{ url('/ujian/simpan-jawaban') }}",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_soal: idSoal,
+                id_paket: idPaket,
+                jawaban1: jawabanSiswa[idSoal][0],
+                
+            },
+        });
     }
 });
 })

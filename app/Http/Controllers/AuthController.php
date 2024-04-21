@@ -20,13 +20,14 @@ class AuthController extends Controller
         ]);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            if (auth()->user()->status == 'admin') {
+            if (auth()->user()->status == 'Admin') {
                 return redirect()->route('home');
-            } elseif (auth()->user()->status == 'siswa') {
+            } elseif (auth()->user()->status == 'Siswa') {
                 return redirect()->route('peserta');
             }
         }
-        return view('auth/login');
+
+        return redirect()->route('login')->withInput()->withErrors(['error' => 'Username atau password salah']);
     }
 
     public function logout(Request $request)

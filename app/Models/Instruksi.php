@@ -9,13 +9,13 @@ class Instruksi extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'kolomA',
-        'kolomB',
-        'kolomC',
-        'kolomD',
-        'kolomE',
+        'soal',
         'waktu',
         'kkm',
         'status',
     ];
+    public function pertanyaan()
+    {
+        return $this->hasMany('App\Models\Pertanyaan', 'id_instruksi'); // Sesuaikan dengan nama kolom yang benar
+    }
 }

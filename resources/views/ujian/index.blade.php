@@ -3,6 +3,7 @@
 @section('title','Siswa')
 
 @section('content')
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -32,7 +33,7 @@
                 <p>Untuk memulai simulasi pastikan anda tidak keluar dari halaman ini sampai semua tahapan tes selesai</p>
                 <p>Silahkan klik mulai tes untuk memulai tes</p>
                 <div class="d-flex justify-content-center">
-                    <a href="{{route('kecerdasan')}}"><button class="btn btn-success">Mulai Tes</button></a>
+                    <button id="mulaiUjian" class="btn btn-success">Mulai Tes</button>
                 </div>
             </div>
           </div>
@@ -47,4 +48,24 @@
         <!-- Control sidebar content goes here -->
       </aside>
       <!-- /.control-sidebar -->
+      <script>
+        // Ambil tombol "Mulai Tes" berdasarkan ID
+ 
+         document.getElementById('mulaiUjian').addEventListener('click', function() {
+            // Mengirim sinyal bahwa tombol diklik ke file kecerdasan
+            window.location.href = '/ujian/kecerdasan?fullscreen=true';
+        });
+      </script>
+      @if(session('message'))
+    <script>
+      
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+              icon: "info",
+              title: "Pemberitahuan",
+              text: "{{ session('message') }}",
+            });
+        });
+    </script>
+@endif
 @endsection

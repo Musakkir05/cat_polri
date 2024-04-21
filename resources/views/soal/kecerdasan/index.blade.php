@@ -1,7 +1,7 @@
-
+{{-- @dd($SoalList) --}}
 <?php use Carbon\Carbon; ?> 
 @extends('layouts.app')
-@section('title','Soal Kepribadian')
+@section('title','Soal')
 @section('content')
 
   <!-- Content Wrapper. Contains page content -->
@@ -11,9 +11,8 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Kepribadian</h1>
+            <h1 class="m-0">Kecerdasan</h1>
           </div><!-- /.col -->
-       
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -27,52 +26,52 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body center">
-         <div class="row">
-          <div class="col-md-4 col-sm-6 col-12">
-            <div class="info-box">
-              <span class="info-box-icon bg-info"><i class="far fa-copy"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Total Soal</span>
-                <span class="info-box-number">{{count($soalList)}}</span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <div class="col-md-4 col-sm-6 col-12">
-            <div class="info-box">
-              <span class="info-box-icon bg-success"><i class="far fa-copy"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Tampil</span>
-                @php
-                    $countSoal = $soalList->where('status','=','Y')->count(); 
-                
-                @endphp
-                <span class="info-box-number=">{{$countSoal}}</span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-          <div class="col-md-4  col-sm-6 col-12">
-            <div class="info-box">
-              <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Tidak Tampil</span>
-                @php
-                    $countSoal = $soalList->where('status','=','N')->count(); 
-                
-                @endphp
-                <span class="info-box-number">{{$countSoal}}</span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </div>
-         </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-info"><i class="far fa-copy"></i></span>
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Total Soal</span>
+                      <span class="info-box-number">{{count($soalList)}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <div class="col-md-4 col-sm-6 col-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-success"><i class="far fa-copy"></i></span>
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Tampil</span>
+                      @php
+                          $countSoal = $soalList->where('status','=','Y')->count(); 
+                      
+                      @endphp
+                      <span class="info-box-number=">{{$countSoal}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+                <div class="col-md-4  col-sm-6 col-12">
+                  <div class="info-box">
+                    <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+      
+                    <div class="info-box-content">
+                      <span class="info-box-text">Tidak Tampil</span>
+                      @php
+                          $countSoal = $soalList->where('status','=','N')->count(); 
+                      
+                      @endphp
+                      <span class="info-box-number">{{$countSoal}}</span>
+                    </div>
+                    <!-- /.info-box-content -->
+                  </div>
+                  <!-- /.info-box -->
+                </div>
+               </div>
             <button type="button" id="btn-soal" class="btn btn-primary btn-md">Tulis Soal</button>
             <div style="display:none" id="wrap-soal">
                 <form class="form-horizontal" id="form-soal" method="post">
@@ -112,22 +111,40 @@
                       </div>
                       
                     </div>
-                 
                     <div class="form-group">
-                      <label class="col-sm-2 control-label">Kunci</label>
+                      <label class="col-sm-2 control-label">Pilihan E</label>
+                      <div class="col-sm-10">
+                        <textarea class="form-control textarea" name="pile" placeholder="Pilihan E"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Kunci Jawaban 1</label>
                       <div class="col-sm-10">
                         <div class="radio">
-                          <label><input type="radio" name="kunci" id="a" value="A"> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="b" value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="c" value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="d" value="D"> Jawaban <b>D</b></label>
+                          <label><input type="radio" name="kunci1" id="a" value="A"> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci1" id="b" value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci1" id="c" value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci1" id="d" value="D"> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci1" id="e" value="E"> Jawaban <b>E</b></label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Kunci jawaban 2</label>
+                      <div class="col-sm-10">
+                        <div class="radio">
+                          <label><input type="radio" name="kunci2" id="a" value="A"> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci2" id="b" value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci2" id="c" value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci2" id="d" value="D"> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci2" id="e" value="E"> Jawaban <b>E</b></label>
                         </div>
                       </div>
                     </div>
                     <div class="form-group" style="margin-top: 15px">
                       <label class="col-sm-2 control-label">Score</label>
                       <div class="col-sm-2">
-                          <input type="text" class="form-control numOnly" value="1" name="score" placeholder="Score">
+                        <input type="text" class="form-control numOnly" name="score" value="1" placeholder="Score">
                       </div>
                     </div>
                     <div class="form-group">
@@ -183,12 +200,13 @@
                 </thead>
                 <tbody>
                     @foreach ($soalList as $key=>$data)
-                    
                     <tr>
                         <td>{!!$loop->iteration!!}</td>
                         <td>{!!$data->soal!!}</td>
                         <td>{!!$data->jenis!!}</td>
-                        <td>{!!$data->kunci_jawaban1!!}</td>
+                        <td>{!!$data->kunci_jawaban1!!} @if ($data->kunci_jawaban2)
+                            <p>Dan</p>{!!$data->kunci_jawaban2!!}
+                        @endif</td>
                         <td>{!!$data->score!!}</td>
                         <td style="text-align: center">
                           @if($data->status == 'Y')
@@ -199,8 +217,8 @@
                       </td>
                         <td style="text-align: center">
           
-                            <a href="/soal/kepribadian/edit/{{$data->id}}" class="btn-sm btn-primary" >Edit</a>
-                            
+                            <a href="/soal/kecerdasan/edit/{{$data->id}}" class="btn-sm btn-primary" >Edit</a>
+                            <a href="/edit-paket/{{$data->id}}" class="btn-sm btn-info">Detail</a>
                             <a href="javascript:void(0)" onclick="deleteSoal({{$data->id}})" class="btn-sm btn-danger">Hapus</a>
 
                           </td>
@@ -229,11 +247,30 @@
 
 <script>
     $(document).ready(function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var successMessage = urlParams.get('success');
+    if (successMessage ) {
+        swal("Sukses!", successMessage, "success").then(function() {
+            // Setel ulang URL tanpa query string setelah mengklik OK pada alert
+            window.history.replaceState({}, document.title, window.location.pathname);
+        });
+    }
+});
+    $(document).ready(function() {
         $("#btn-soal").click(function() {
       $("#wrap-soal").slideToggle();
     });
         $('.textarea').summernote({
-
+		toolbar: [
+						['style', ['style']],
+				    ['font', ['bold', 'italic', 'underline', 'clear']],
+				    ['fontname', ['fontname']],
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture', 'hr']],
+            ['view', ['fullscreen', 'codeview']]
+        ],
         height:100,
 				fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36', '48' , '64', '82', '150']
 	})
@@ -252,10 +289,11 @@
         $("#wrap-btn").hide();
         $("#loading-soal").show();
         var dataString = $("#form-soal").serialize();
+        // var dataString = 'tetst';
 
         $.ajax({
           type: "POST",
-          url: "{{ url('/soal/kepribadian/index') }}",
+          url: "{{ url('/soal/kecerdasan/index') }}",
           data: dataString,
           headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -263,15 +301,11 @@
           success: function(data) {
             $("#loading-soal").hide();
             $("#wrap-btn").show();
-            if (data == 'done') {
-              swal({
-                title: "Sukses!",
-                text: "Data berhasil ditambahkan",
-                icon: "success",
-            }).then(function() {
-                location.reload();
-            });
-             
+            if (data == 'ok') {
+              $("#notif-soal").removeClass('alert alert-danger').addClass('alert alert-info').html("Soal berhasil disimpan.").show();
+              setInterval(function() {
+        location.reload();
+    }, 2000);
             } else {
               $("#notif-soal").removeClass('alert alert-info').addClass('alert alert-danger').html(data).show();
             }
@@ -282,19 +316,10 @@
 
 </script>
 <script>
-$(document).ready(function() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var successMessage = urlParams.get('success');
-    if (successMessage ) {
-        swal("Sukses!", successMessage, "success").then(function() {
-            // Setel ulang URL tanpa query string setelah mengklik OK pada alert
-            window.history.replaceState({}, document.title, window.location.pathname);
-        });
-    }
-});
       function deleteSoal(id){
         Swal.fire({
   title: "Apakah kamu yakin menghapus data ini?",
+  
   icon: "warning",
   showCancelButton: true,
   confirmButtonColor: "#3085d6",
@@ -316,17 +341,13 @@ $(document).ready(function() {
       title: "Deleted!",
       text: "Data telah terhapus.",
       icon: "success"
-    }).then(function() {
-                location.reload();
-            });
-    
-    
+    });
+    location.reload();
   }
 });
         
     
       }
-     
 </script>
 @endpush
 

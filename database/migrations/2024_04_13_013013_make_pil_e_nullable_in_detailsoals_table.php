@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pertanyaans', function (Blueprint $table) {
-            $table->id();
-            $table->integer('id_instruksi');
-            $table->longText('soal');
-            $table->string('kunci', '5');
-            $table->string('status', '5');
-            $table->timestamps();
+        Schema::table('detailsoals', function (Blueprint $table) {
+            $table->string('pilE')->nullable()->change();
         });
     }
 
@@ -26,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pertanyaans');
+        Schema::table('detailsoals', function (Blueprint $table) {
+            $table->string('pilE')->nullable(false)->change();
+        });
     }
 };

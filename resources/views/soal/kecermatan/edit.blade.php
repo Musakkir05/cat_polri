@@ -10,9 +10,9 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Edit Soal Kepribadian</h1>
+          <h1 class="m-0">Edit Petunjuk</h1>
         </div><!-- /.col -->
-        
+
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
@@ -34,54 +34,12 @@
                     <div class="col-sm-10">
                       <input type="hidden" name="id" value="{{$soal->id}}">
                       <!-- <input type="hidden" name="id_soal" value="N"> -->
-                      <input type="hidden" name="jenis" value="{{$soal->paket}}">
+                      <input type="hidden" name="jenis" value="{{$soal->jenis}}">
                       <input type="hidden" name="sesi" value="{{ md5(rand(0000000000, mt_getrandmax())) }}">
                       <textarea class="form-control textarea" name="soal" placeholder="Soal">{{$soal->soal}}</textarea>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Pilihan A</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control textarea" name="pila" placeholder="Pilihan A">{{$soal->pilA}}</textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Pilihan B</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control textarea" name="pilb" placeholder="Pilihan B">{{$soal->pilB}}</textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Pilihan C</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control textarea" name="pilc" placeholder="Pilihan C">{{$soal->pilC}}</textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Pilihan D</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control textarea" name="pild" placeholder="Pilihan D">{{$soal->pilD}}</textarea>
-                    </div>
-                    
-                  </div>
-         
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Kunci</label>
-                    <div class="col-sm-10">
-                        <div class="radio">
-                            <label><input type="radio" name="kunci" id="a" value="A" @if($soal->kunci_jawaban1 == "A") checked @endif> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="kunci" id="b" value="B" @if($soal->kunci_jawaban1 == "B") checked @endif> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="kunci" id="c" value="C" @if($soal->kunci_jawaban1 == "C") checked @endif> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="kunci" id="d" value="D" @if($soal->kunci_jawaban1 == "D") checked @endif> Jawaban <b>D</b></label>
-                          </div>
-                    </div>
-                  </div>
-                  <div class="form-group" style="margin-top: 15px">
-                    <label class="col-sm-2 control-label">Score</label>
-                    <div class="col-sm-2">
-                      <input type="text" class="form-control numOnly" name="score" placeholder="Score" value="{{$soal->score}}">
-                    </div>
-                  </div>
+
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Status</label>
                     <div class="col-sm-10">
@@ -168,20 +126,15 @@
     console.log(dataString);
     $.ajax({
       type: "POST",
-      url: "{{ url('soal/kepribadian/update')}}",
+      url: "{{ url('/soal/kecermatan/update')}}",
       data: dataString,
-
-
-
-
       success: function( data){
         $("#loading-soal").hide();
         $("#wrap-btn").show();
         if (data == 'ok') {
-          var successMessage = "Soal berhasil diubah.";
+            var successMessage = "Soal berhasil diubah.";
     window.location.href = "{{ url('soal/detailSoal/' . $soal->id_paket) }}?success=" + encodeURIComponent(successMessage);
             
-         
 
         }else{
           $("#notif-soal").removeClass('alert alert-info').addClass('alert alert-danger').html(data).show();

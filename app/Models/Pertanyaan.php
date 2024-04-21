@@ -11,6 +11,11 @@ class Pertanyaan extends Model
     protected $fillable = [
         'id_instruksi',
         'soal',
+        'status',
         'kunci',
     ];
+    public function instruksi()
+    {
+        return $this->belongsTo(Instruksi::class, 'id_instruksi');
+    }
 }

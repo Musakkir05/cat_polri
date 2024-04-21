@@ -1,6 +1,11 @@
 @extends('layouts.auth')
-@section('title','Login');
+@section('title','Login')
 @section('content')
+@if($errors->any())
+    <div class="alert alert-danger">
+        {{ $errors->first() }}
+    </div>
+@endif
 <body class="hold-transition login-page">
     <div class="login-box">
       <div class="login-logo">

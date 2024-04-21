@@ -10,14 +10,9 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Starter Page</h1>
+          <h1 class="m-0">Edit Pertanyaan</h1>
         </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active">Starter Page</li>
-          </ol>
-        </div><!-- /.col -->
+
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
   </div>
@@ -44,67 +39,20 @@
                       <textarea class="form-control textarea" name="soal" placeholder="Soal">{{$soal->soal}}</textarea>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Pilihan A</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control textarea" name="pila" placeholder="Pilihan A">{{$soal->pilA}}</textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Pilihan B</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control textarea" name="pilb" placeholder="Pilihan B">{{$soal->pilB}}</textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Pilihan C</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control textarea" name="pilc" placeholder="Pilihan C">{{$soal->pilC}}</textarea>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Pilihan D</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control textarea" name="pild" placeholder="Pilihan D">{{$soal->pilD}}</textarea>
-                    </div>
-                    
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Pilihan E</label>
-                    <div class="col-sm-10">
-                      <textarea class="form-control textarea" name="pile" placeholder="Pilihan E">{{$soal->pilE}}</textarea>
-                    </div>
-                  </div>
+                 
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Kunci</label>
                     <div class="col-sm-10">
                         <div class="radio">
-                            <label><input type="radio" name="kunci1" id="a" value="A" @if($soal->kunci_jawaban1 == "A") checked @endif> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="kunci1" id="b" value="B" @if($soal->kunci_jawaban1 == "B") checked @endif> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="kunci1" id="c" value="C" @if($soal->kunci_jawaban1 == "C") checked @endif> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="kunci1" id="d" value="D" @if($soal->kunci_jawaban1 == "D") checked @endif> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
-                            <label><input type="radio" name="kunci1" id="e" value="E" @if($soal->kunci_jawaban1 == "E") checked @endif> Jawaban <b>E</b></label>
+                            <label><input type="radio" name="kunci" id="a" value="A" @if($soal->kunci == "A") checked @endif> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="kunci" id="b" value="B" @if($soal->kunci == "B") checked @endif> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="kunci" id="c" value="C" @if($soal->kunci == "C") checked @endif> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="kunci" id="d" value="D" @if($soal->kunci == "D") checked @endif> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
+                            <label><input type="radio" name="kunci" id="e" value="E" @if($soal->kunci == "E") checked @endif> Jawaban <b>E</b></label>
                           </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <label class="col-sm-2 control-label">Kunci jawaban 2</label>
-                    <div class="col-sm-10">
-                      <div class="radio">
-                        <label><input type="radio" name="kunci2" id="a" value="A" @if($soal->kunci_jawaban2 == "A") checked @endif value="A"> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
-                        <label><input type="radio" name="kunci2" id="b" value="B" @if($soal->kunci_jawaban2 == "B") checked @endif value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
-                        <label><input type="radio" name="kunci2" id="c" value="C" @if($soal->kunci_jawaban2 == "C") checked @endif value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
-                        <label><input type="radio" name="kunci2" id="d" value="D" @if($soal->kunci_jawaban2 == "D") checked @endif value="D"> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
-                        <label><input type="radio" name="kunci2" id="e" value="E" @if($soal->kunci_jawaban2 == "E") checked @endif value="E"> Jawaban <b>E</b></label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group" style="margin-top: 15px">
-                    <label class="col-sm-2 control-label">Score</label>
-                    <div class="col-sm-2">
-                      <input type="text" class="form-control numOnly" name="score" placeholder="Score" value="{{$soal->score}}">
-                    </div>
-                  </div>
+
                   <div class="form-group">
                     <label class="col-sm-2 control-label">Status</label>
                     <div class="col-sm-10">
@@ -117,7 +65,7 @@
                   <div class="form-group" style="margin-top: 20px">
                     <div class="col-sm-offset-2 col-sm-10">
                       <div id="notif-soal" style="display: none;"></div>
-                      <img src="{{ url('/assets/images/facebook.gif') }}" style="display: none;" id="loading-soal">
+                      <img src="{{ url('assets/dist/img/ZKZg.gif') }}" style="display: none;" id="loading-soal">
                       <div id="wrap-btn">
                         <button type="button" class="btn btn-danger" id="batal">Batal</button>
                         <button type="button" class="btn btn-success" id="simpan-soal">Simpan</button>
@@ -191,20 +139,15 @@
     console.log(dataString);
     $.ajax({
       type: "POST",
-      url: "{{ url('/soal/aksi/edit') }}",
+      url: "{{ url('/soal/kecermatan/pertanyaan/update')}}",
       data: dataString,
-
-
-
-
       success: function( data){
         $("#loading-soal").hide();
         $("#wrap-btn").show();
         if (data == 'ok') {
-          $("#notif-soal").removeClass('alert alert-danger').addClass('alert alert-info').html("Soal berhasil disimpan.").show();
-          setTimeout(() => {
-            window.location.href = "{{ url('soal/detailSoal/' . $soal->id) }}";
-          }, 3000);
+          var successMessage = "Soal berhasil diubah.";
+    window.location.href = "{{ url('soal/kecermatan/pertanyaan/detail-pertanyaan/' . $soal->id_instruksi) }}?success=" + encodeURIComponent(successMessage);
+            
 
         }else{
           $("#notif-soal").removeClass('alert alert-info').addClass('alert alert-danger').html(data).show();

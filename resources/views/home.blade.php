@@ -10,7 +10,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Home</h1>
+            <h1 class="m-0">Dashboard</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -33,7 +33,12 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Kecerdasan</span>
-                <span class="info-box-number">-</span>
+                @php
+                use App\Models\DetailSoal;
+                $detailsoal = DetailSoal::all();
+                      $sum = $detailsoal->where('jenis', 'Kecerdasan')->where('status', 'Y')->count();
+                @endphp
+                <span class="info-box-number">{{$sum}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -46,7 +51,11 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Kepribadian</span>
-                <span class="info-box-number">-</span>
+                @php
+                $detailsoal = DetailSoal::all();
+                      $sum = $detailsoal->where('jenis', 'Kepribadian')->where('status', 'Y')->count();
+                @endphp
+                <span class="info-box-number">{{$sum}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -63,7 +72,12 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Kecermatan</span>
-                <span class="info-box-number">-</span>
+                @php
+                use App\Models\Pertanyaan;
+                $sum = Pertanyaan::all();
+                      $sum = $sum->where('status', 'Y')->count();
+                @endphp
+                <span class="info-box-number">{{$sum}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -76,13 +90,21 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Siswa</span>
-                <span class="info-box-number">2,000</span>
+                @php
+                use App\Models\User;
+                $sum = User::all();
+                      $sum = $sum->where('status', 'Siswa')->count();
+                @endphp
+                <span class="info-box-number">{{$sum}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
             <!-- /.info-box -->
           </div>
           <!-- /.col -->
+          <div class="center">
+            <button onclick="resetUjian()" class="btn btn-danger">Reset data ujian</button>
+          </div>
         </div>
       </div>
     </section>
@@ -98,9 +120,38 @@
   <!-- /.control-sidebar -->
 @push('scripts')
     <script>
-      $(document).ready(function () {
-   
-      });
+    
+        function resetUjian() {
+    Swal.fire({
+        title: "Apakah kamu yakin ingin mereset ujian?",
+        text: "Semua data ujian akan dihapus!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Reset!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/reset-ujian',
+                type: 'DELETE',
+                data: {
+                  _token:$("input[name=_token]").val()
+                },
+                success: function (response) {
+                    Swal.fire({
+                        title: "Reset!",
+                        text: "Semua data ujian telah dihapus.",
+                        icon: "success"
+                    }).then(() => {
+                        location.reload(); // Reload halaman setelah penghapusan berhasil
+                    });
+                }
+            });
+        }
+    });
+}
+    
     </script>
 @endpush
 @endsection

@@ -1,7 +1,7 @@
 
 <?php use Carbon\Carbon; ?> 
 @extends('layouts.app')
-@section('title','Soal')
+@section('title','Siswa')
 @section('content')
  <!-- Content Wrapper. Contains page content -->
  <div class="content-wrapper">
@@ -11,12 +11,6 @@
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1 class="m-0">Siswa</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Siswa</a></li>
-            <li class="breadcrumb-item active">Home</li>
-          </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
     </div><!-- /.container-fluid -->
@@ -89,17 +83,13 @@
       "responsive": true,
     });
   });
+ 
 </script>
 
-@if (Session::has('message'))
+@if(session('success'))
 <script>
-  $(document).Toasts('create', {
-    class: 'bg-success',
-    title: 'Toast Title',
-    subtitle: 'Subtitle',
-    body: 'Data Berhasil di hapus.'
-});
-// toastr.success("{{Session::get('message')}}"); 
+  var successMessage = "{{ session('success') }}";
+swal("Sukses!", successMessage, "success");
 </script>
 @endif
 @endpush

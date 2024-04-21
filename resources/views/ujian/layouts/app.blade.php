@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{asset('assets/plugins/sweetalert2/sweetalert2.css')}}">
   <style>
     
   </style>
@@ -76,15 +77,27 @@
                         </a>
                       </li>
 
+                      @php
+                        $user = auth()->user();
+                        $isSiswa = false;
 
-        
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="nav-icon fas fa-book"></i>
-                      <p>
-                        Laporan</p>
-                    </a>
-                  </li>
+                        if ($user && $user->status === 'Siswa') {
+                            $isSiswa = true;
+                        }
+
+                        $jumlahData = App\Models\Jawaban_kecermatan::distinct('id_user')->count('id_user');
+                    @endphp
+                  
+                      @if ($jumlahData >= 1 && $isSiswa)
+                      <li class="nav-item">
+                        <a href="{{ url('/ujian/laporan')}}" class="nav-link {{(Request::is('ujian/laporan')==true ?'active':'')}}">
+                          <i class="nav-icon fas fa-book"></i>
+                          <p>
+                            Laporan</p>
+                        </a>
+                      </li>
+                      @endif
+                  
                 </ul>
               </nav>
               <!-- /.sidebar-menu -->
@@ -106,5 +119,6 @@
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 </body>
 </html>

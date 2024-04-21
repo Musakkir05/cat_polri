@@ -9,12 +9,16 @@
     <title>Document</title>
      <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/sweetalert2/sweetalert2.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
   <style>
     	.jawab {
             padding: 3px;
         margin: 7px;
+        border: 2px dashed grey;
     display: block; /* Mengubah tata letak elemen menjadi blok */
     width: 100%; /* Menyesuaikan lebar dengan parent */
     text-align: left; /* Mengatur teks ke kiri */
@@ -22,6 +26,7 @@
     border: 0px;
 	}
     	.dijawab {
+            border: 2px dashed grey;
             cursor: pointer;
     margin: 7px 0 7px 7px;
 		    width: 100%; /* Menyesuaikan lebar dengan parent */
@@ -88,7 +93,7 @@
 </style>
 </head>
 <body>
-    <div class="content p-3">
+    <div class="content p-3" id="ujian">
         <div class="row ">
             <div class="col-3">
                 <div class="card h-100">
@@ -114,7 +119,7 @@
                                 <button class="btn btn-success {{ $soal[0]['jenis'] === 'Kecerdasan' ? '' : 'disabled' }}">Kecerdasan</button>
                                 <button type="button" class="btn  btn-success {{ $soal[0]['jenis'] === 'Kepribadian' ? '' : ' disabled'  }}">Kepribadian</button>
                                 <button type="button" class="btn  btn-success {{ $soal[0]['jenis'] === 'Kecermatan' ? '' : ' disabled'  }}">Kecermatan</button>
-                            <a href="/ujian/kepribadian/index"><button class="btn btn-primary">kepribadian</button></a>
+                              
                             </div>
                             
                           
@@ -147,7 +152,7 @@
                         <ul class="pagination" style="margin-top: 5px !important;">
                         @foreach ($soal as $key_number=>$data_number)
                         
-                        <li class="no_soal" id="{{ 'nav'.$data_number->id }}" data-id="{{ $data_number->id }}" data-no="{{ $key_number+1 }}">
+                        <li id-fullsc="mulaitest" class="no_soal" id="{{ 'nav'.$data_number->id }}" data-id="{{ $data_number->id }}" data-no="{{ $key_number+1 }}">
                             {{-- <a href="#" style="width: 40px !important;">{{ $key_number+1 }}</a> --}}
                         <button class="btn">{{ $key_number+1 }}</button>
                         </li>
@@ -232,47 +237,131 @@
     </div>
     
 
-
+    <script>
+        
+    </script>
 
 
 <script src="{{ asset('assets/plugins/jquery/jquery.min.js') }}"></script>
 
 <!-- Bootstrap 4 -->
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.min.js') }}"></script>
-
+<script src="{{ url('js/jquery.fullscreen-min.js') }}"></script>
 <script>
-    $(document).ready(function () {
-        
-     // Waktu awal dalam detik (90 menit)
-     var waktuAwal = <?php echo $paket[0]['waktu'] ?> * 60; // 90 menit * 60 detik
+     
+       function startTimer() {
+    // Waktu awal dalam detik (90 menit)
+    var waktuAwal = <?php echo $paket[0]['waktu'] ?> * 60; // 90 menit * 60 detik
 
     // Mulai countdown timer
     var timerInterval = setInterval(function() {
-         // Hitung jam, menit, dan detik dari waktu awal
+        // Hitung jam, menit, dan detik dari waktu awal
         var jam = Math.floor(waktuAwal / 3600);
         var sisaDetik = waktuAwal % 3600;
         var menit = Math.floor(sisaDetik / 60);
         var detik = sisaDetik % 60;
 
-         // Format waktu
-         var timerText = jam + ' : ' + menit + ' : ' + detik ;
+        // Format waktu
+        var timerText = jam + ' : ' + menit + ' : ' + detik;
 
         // Tampilkan timer di dalam elemen dengan id "timer"
-         document.getElementById('timer').innerHTML = timerText;
+        document.getElementById('timer').innerHTML = timerText;
 
-         // Kurangi waktu awal setiap detik
+        // Kurangi waktu awal setiap detik
         waktuAwal--;
 
-         // Cek apakah waktu telah habis
-         if (waktuAwal < 0) {
-             clearInterval(timerInterval); // Hentikan timer
-            document.getElementById('timer').innerHTML = 'Waktu habis!'; // Tampilkan pesan waktu habis
-             // Lakukan tindakan setelah waktu habis (misalnya, lanjut ke tes selanjutnya)
-         }
-     }, 1000); // Update timer setiap 1 detik (1000 milidetik)
+        // Cek apakah waktu telah habis
+        if (waktuAwal < 0) {
+            clearInterval(timerInterval); // Hentikan timer
+            document.getElementById('timer').innerHTML = 'Waktu habis!'; 
+            Swal.fire({
+                title: "Waktu Telah Habis",
+                text: "Waktu telah habis!",
+                icon: "warning",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showCancelButton: false, // Menyembunyikan tombol cancel (X)
+                showConfirmButton: true, // Menampilkan tombol OK
+                confirmButtonText: "OK",
+                backdrop: "static", // Tidak memungkinkan untuk menutup alert dengan mengklik di luar alert
+                keyboard: false, // Tidak memungkinkan untuk menutup alert dengan menekan tombol escape
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/ujian/kepribadian/index"; // Redirect ke halaman ujian atau kecermatan
+                }
+            });
+        }
+    }, 1000); 
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+        function showCountdownAlert() {
+            Swal.fire({
+            title: 'Persiapan Tahap Kecerdasan',
+            html: " <b></b> Detik.",
+            timer: 5000, // Waktu dalam milidetik (5 detik)
+            timerProgressBar: true,
+            icon: 'warning',
+            showConfirmButton: false,
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                var countdownTime = 5; // Hitung mundur dari 5 detik
+                var countdownInterval = setInterval(() => {
+                    timer.textContent = countdownTime;
+                    countdownTime--;
+                    if (countdownTime < 0) {
+                        clearInterval(countdownInterval); // Hentikan countdown saat mencapai 0
+                        startTimer(); // Memulai hitungan mundur waktu pengerjaan
+                        Swal.close(); // Tutup alert setelah countdown selesai
+                    }
+                }, 1000);
+            }
+        });
+    }
+
+    // Panggil fungsi showCountdownAlert saat halaman dimuat
+    showCountdownAlert();
+});
+   var mulaiTestButton = document.querySelector('[id-fullsc="mulaitest"]');
+var nextButton = document.getElementById('next');
+
+// Menambahkan event listener ke salah satu dari elemen tersebut
+if (mulaiTestButton) {
+    mulaiTestButton.addEventListener('click', function() {
+        mintaLayarPenuh();
+    });
+}if (nextButton) {
+    nextButton.addEventListener('click', function() {
+        mintaLayarPenuh();
+    });
+}
+
+// Fungsi untuk meminta mode layar penuh
+function mintaLayarPenuh() {
+    var elemen = document.documentElement;
+    if (elemen.requestFullscreen) {
+        elemen.requestFullscreen();
+    } else if (elemen.mozRequestFullScreen) {
+        elemen.mozRequestFullScreen();
+    } else if (elemen.webkitRequestFullscreen) {
+        elemen.webkitRequestFullscreen();
+    } else if (elemen.msRequestFullscreen) {
+        elemen.msRequestFullscreen();
+    }
+}
+    
+    $(document).ready(function () {
+ 
 
      $(document).on('click', ".no_soal", function() {
         var $this = $(this);
@@ -281,7 +370,7 @@
         var id_soal = $this.attr('data-id');
         var nomorSoal = $this.attr('data-no');
         $('#no_soal_detail').html(nomorSoal + '.');
-        if (jawabanSiswa[idSoal] && jawabanSiswa[idSoal].length > 0) {
+        if (jawabanSiswa[id_soal] && jawabanSiswa[id_soal].length > 0) {
             // Ubah warna latar belakang tombol menjadi hijau karena sudah ada jawaban yang dipilih
             $this.find('button').css({
                 "background-color": "#15C12C",
@@ -334,7 +423,21 @@ $('#next').click(function () {
         }
     } else {
         // Tampilkan pesan jika tidak ada soal berikutnya
-        alert('Soal telah habis.');
+        Swal.fire({
+        title: "Apakah Kamu yakin?",
+        text: "Menyelesaikan tahapan ini?",
+        icon: "warning",
+        showCancelButton: true,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya,Selesai"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "/ujian/kepribadian/index";
+        }
+    });
     }
 });
 
@@ -344,84 +447,89 @@ $('#next').click(function () {
     var jawabanSiswa = {}; // Objek untuk menyimpan jawaban yang dipilih
 
     $(document).on('click', ".jawab", function() {
-    var $this = $(this);
+        var $this = $(this);
 
-    var selectedOption = $this.attr('data-jawab');
-    var idSoal = $this.attr('data-id');
-    var idPaket = $this.attr('paket-id');
+var selectedOption = $this.attr('data-jawab');
+var idSoal = $this.attr('data-id');
+var idPaket = $this.attr('paket-id');
 
+// Periksa apakah jawaban sudah dipilih sebelumnya
+if (!jawabanSiswa[idSoal]) {
+    jawabanSiswa[idSoal] = []; // Inisialisasi array jawaban yang dipilih
+}
+
+// Periksa apakah jumlah jawaban yang dipilih belum mencapai 2
+if (jawabanSiswa[idSoal].length < 2 || jawabanSiswa[idSoal].includes(selectedOption)) {
     // Periksa apakah jawaban sudah dipilih sebelumnya
-    if (!jawabanSiswa[idSoal]) {
-        jawabanSiswa[idSoal] = []; // Inisialisasi array jawaban yang dipilih
-    }
+    if (jawabanSiswa[idSoal].includes(selectedOption)) {
+        // Jika sudah dipilih, hapus dari daftar jawaban yang dipilih
+        jawabanSiswa[idSoal] = jawabanSiswa[idSoal].filter(function (item) {
+            return item !== selectedOption;
+        });
+        // Ubah tampilan kembali menjadi tidak dipilih
+        $this.removeClass('dijawab');
+        // Ubah warna tombol kembali menjadi putih
+        $this.css('background-color', '#ffffff');
 
-    // Periksa apakah jumlah jawaban yang dipilih belum mencapai 2
-    if (jawabanSiswa[idSoal].length < 2 || jawabanSiswa[idSoal].includes(selectedOption)) {
-        // Periksa apakah jawaban sudah dipilih sebelumnya
-        if (jawabanSiswa[idSoal].includes(selectedOption)) {
-            // Jika sudah dipilih, hapus dari daftar jawaban yang dipilih
-            jawabanSiswa[idSoal] = jawabanSiswa[idSoal].filter(function (item) {
-                return item !== selectedOption;
-            });
-            // Ubah tampilan kembali menjadi tidak dipilih
-            $this.removeClass('dijawab');
-            // Ubah warna tombol kembali menjadi putih
-            $this.css('background-color', '#ffffff');
-
-            // Jika tidak ada jawaban dipilih untuk soal ini, ubah warna tombol navigasi daftar soal menjadi putih
-            if (jawabanSiswa[idSoal].length === 0) {
-                $('#nav' + idSoal).find('button').css({
-                    "background-color": "#a7a7ab",
-                    "color":"#090808",
-
-                
-
-            });
-            }
-            $.ajax({
-                type: "POST",
-                url: "{{ url('/ujian/simpan-jawaban') }}",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id_soal: idSoal,
-                    id_paket: idPaket,
-                    jawaban1: (jawabanSiswa[idSoal].length >= 1) ? jawabanSiswa[idSoal][0] : null,
-        jawaban2: (jawabanSiswa[idSoal].length === 2) ? jawabanSiswa[idSoal][1] : null
-                    
-                },
-               
-            });
-        } else {
-            // Jika belum dipilih, tambahkan ke daftar jawaban yang dipilih
-            jawabanSiswa[idSoal].push(selectedOption);
-            // Tambahkan kelas 'dijawab' untuk menandai jawaban yang dipilih
-            $this.addClass('dijawab');
-            // Ubah warna tombol menjadi hijau ketika dipilih
-            $this.css('background-color', '#15C12C');
-            
-            // Ubah warna latar belakang tombol navigasi daftar soal menjadi hijau karena ada jawaban yang dipilih
+        // Jika tidak ada jawaban dipilih untuk soal ini, ubah warna tombol navigasi daftar soal menjadi putih
+        if (jawabanSiswa[idSoal].length === 0) {
             $('#nav' + idSoal).find('button').css({
-                "background-color": "#15C12C",
-				"color": "#fff",
-                
-            });
-            // Kirim data ke controller menggunakan AJAX
-            $.ajax({
-                type: "POST",
-                url: "{{ url('/ujian/simpan-jawaban') }}",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id_soal: idSoal,
-                    id_paket: idPaket,
-                    jawaban1: (jawabanSiswa[idSoal].length >= 1) ? jawabanSiswa[idSoal][0] : null,
-        jawaban2: (jawabanSiswa[idSoal].length === 2) ? jawabanSiswa[idSoal][1] : null
-                    
-                },
-               
+                "background-color": "#a7a7ab",
+                "color": "#090808",
             });
         }
     } else {
-        alert('Anda hanya bisa memilih dua jawaban.');
+        // Jika belum dipilih, tambahkan ke daftar jawaban yang dipilih
+        if (jawabanSiswa[idSoal].length === 2) {
+            // Hapus jawaban pertama dan ubah kelasnya menjadi "jawab"
+            var removedOption = jawabanSiswa[idSoal].shift();
+            $('button[data-id="' + idSoal + '"][data-jawab="' + removedOption + '"]').removeClass('dijawab').css('background-color', '#ffffff');
+        }
+        jawabanSiswa[idSoal].push(selectedOption);
+        // Tambahkan kelas 'dijawab' untuk menandai jawaban yang dipilih
+        $this.addClass('dijawab');
+        // Ubah warna tombol menjadi hijau ketika dipilih
+        $this.css('background-color', '#15C12C');
+
+        // Ubah warna latar belakang tombol navigasi daftar soal menjadi hijau karena ada jawaban yang dipilih
+        $('#nav' + idSoal).find('button').css({
+            "background-color": "#15C12C",
+            "color": "#fff",
+        });
+    }
+    // Kirim data ke controller menggunakan AJAX
+    $.ajax({
+        type: "POST",
+        url: "{{ url('/ujian/simpan-jawaban') }}",
+        data: {
+            _token: '{{ csrf_token() }}',
+            id_soal: idSoal,
+            id_paket: idPaket,
+            jawaban1: (jawabanSiswa[idSoal].length >= 1) ? jawabanSiswa[idSoal][0] : null,
+            jawaban2: (jawabanSiswa[idSoal].length === 2) ? jawabanSiswa[idSoal][1] : null
+        },
+    });
+} else {
+        // Jika jumlah jawaban sudah mencapai batas (2 jawaban), ganti jawaban pertama dengan jawaban ketiga
+        var removedOption = jawabanSiswa[idSoal].shift();
+        $('button[data-id="' + idSoal + '"][data-jawab="' + removedOption + '"]').removeClass('dijawab').css('background-color', '#ffffff');
+        // Tambahkan jawaban ketiga ke daftar jawaban yang dipilih
+        jawabanSiswa[idSoal].push(selectedOption);
+        // Ubah warna tombol jawaban ketiga menjadi hijau ketika dipilih
+        $this.addClass('dijawab');
+        $this.css('background-color', '#15C12C');
+        // Kirim data ke controller menggunakan AJAX
+        $.ajax({
+            type: "POST",
+            url: "{{ url('/ujian/simpan-jawaban') }}",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_soal: idSoal,
+                id_paket: idPaket,
+                jawaban1: jawabanSiswa[idSoal][0],
+                jawaban2: jawabanSiswa[idSoal][1]
+            },
+        });
     }
 });
 })

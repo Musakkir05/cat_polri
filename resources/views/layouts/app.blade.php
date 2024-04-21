@@ -74,7 +74,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{ asset('assets/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+          <img src="{{ asset('assets/dist/img/user.png') }}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">{{ auth()->user()->name }}</a>
@@ -93,27 +93,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{ route('siswa') }}" class="nav-link {{(Request::is('siswa/index')==true ?'active':'')}}">
+                <a href="{{ route('siswa') }}" class="nav-link {{(Request::is('siswa*')==true ?'active':'')}}">
                   <i class="nav-icon fas fa-users"></i>
                   <p>Siswa</p>
                 </a>
               </li>
 
               <li class="nav-item">
-                <a href="{{route('soal')}}" class="nav-link {{(Request::is('soal/index')==true ?'active':'')}}">
+                <a href="{{route('soal')}}" class="nav-link {{(Request::is('soal*')==true ?'active':'')}}">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Soal</p>
                 </a>
               </li>
            
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-book"></i>
-              <p>
-                Laporan</p>
-            </a>
-          </li>
+              @php
+              $jumlahData = App\Models\Jawaban_kecermatan::distinct('id_user')->count('id_user');
+          @endphp
+          
+          @if($jumlahData >= 2)
+              <li class="nav-item">
+                  <a href="{{ route('laporan') }}" class="nav-link {{ Request::is('laporan*') ? 'active' : '' }}">
+                      <i class="nav-icon fas fa-book"></i>
+                      <p>Laporan</p>
+                  </a>
+              </li>
+          @endif
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

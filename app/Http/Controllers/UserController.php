@@ -18,10 +18,17 @@ class UserController extends Controller
     }
     public function store(Request $request)
     {
+
+        $request->merge([
+            'password' => bcrypt($request->password)
+        ]);
+
         $request['status'] = 'Siswa';
 
-        $siswa = User::create($request->all());
-        return redirect(route('siswa'))->with('message', 'data berhasil di tambah');
+
+        User::create($request->all());
+
+        return redirect(route('siswa'))->with('success', 'Data berhasil ditambahkan');
     }
     public function show($id)
     {
@@ -37,14 +44,14 @@ class UserController extends Controller
         $siswa->password = $request->password;
 
         $siswa->save();
-        return redirect(route('siswa', ['status' => 'ok']));
+        return redirect()->route('siswa')->with('success', 'data berhasil di Ubah');
     }
     public function destroy($id)
     {
         $siswa = User::findOrFail($id);
         if ($siswa) {
             $siswa->delete();
-            return redirect()->route('siswa')->with('message', 'data berhasil di hapus');
+            return redirect()->route('siswa')->with('success', 'data berhasil di hapus');
         }
     }
 }

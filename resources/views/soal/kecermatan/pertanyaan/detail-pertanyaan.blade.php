@@ -11,9 +11,9 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Petunjuk</h1>
+            <h1 class="m-0">Pertanyaan</h1>
           </div><!-- /.col -->
-         
+      
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -23,36 +23,24 @@
     <div class="container-fluid">
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Data Petunjuk</h3>
+          <h3 class="card-title">Data Soal</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body center">
           <div class="row">
-            <div class="col-md-3 col-sm-6 col-12">
+            <div class="col-md-4 col-sm-6 col-12">
               <div class="info-box">
                 <span class="info-box-icon bg-info"><i class="far fa-copy"></i></span>
   
                 <div class="info-box-content">
-                  <span class="info-box-text">Total Petunjuk</span>
+                  <span class="info-box-text">Total Soal</span>
                   <span class="info-box-number">{{count($soalList)}}</span>
                 </div>
                 <!-- /.info-box-content -->
               </div>
               <!-- /.info-box -->
             </div>
-            <div class="col-md-3 col-sm-6 col-12">
-              <div class="info-box">
-                <span class="info-box-icon bg-success"><i class="far fa-copy"></i></span>
-  
-                <div class="info-box-content">
-                  <span class="info-box-text">Total Soal</span>
-                  <span class="info-box-number">{{$jumlah_soal}}</span>
-                </div>
-                <!-- /.info-box-content -->
-              </div>
-              <!-- /.info-box -->
-            </div>
-            <div class="col-md-3 col-sm-6 col-12">
+            <div class="col-md-4 col-sm-6 col-12">
               <div class="info-box">
                 <span class="info-box-icon bg-success"><i class="far fa-copy"></i></span>
   
@@ -68,7 +56,7 @@
               </div>
               <!-- /.info-box -->
             </div>
-            <div class="col-md-3  col-sm-6 col-12">
+            <div class="col-md-4  col-sm-6 col-12">
               <div class="info-box">
                 <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
   
@@ -85,6 +73,25 @@
               <!-- /.info-box -->
             </div>
            </div>
+          <div class="card card-outline card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Instruksi</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.card-tools -->
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body" style="max-width: 50%; max-height: 250px;margin: 0 auto;padding:0;">
+              <span>{!! $instruksi->soal !!}</span>
+          </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+
             <button type="button" id="btn-soal" class="btn btn-primary btn-md">Tulis Soal</button>
             <div style="display:none" id="wrap-soal">
                 <form class="form-horizontal" id="form-soal" method="post">
@@ -93,17 +100,22 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label">Soal</label>
                       <div class="col-sm-10">
-                        <input type="hidden" name="id_paket" value="{{request()->id}}">
+                        <input type="hidden" name="id_instruksi" value="{{request()->id}}">
                         <meta name="csrf-token" content="{{ csrf_token() }}">
                         <input type="hidden" name="sesi" value="{{ md5(rand(0000000000, mt_getrandmax())) }}">
                         <textarea class="form-control textarea" name="soal"  placeholder="soal"></textarea>
                       </div>
                     </div>
- 
-                    <div class="form-group" style="margin-top: 15px">
-                      <label class="col-sm-2 control-label">Waktu</label>
-                      <div class="col-sm-2">
-                        <input type="text" class="form-control numOnly" name="waktu" placeholder="Waktu">
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Kunci</label>
+                      <div class="col-sm-10">
+                        <div class="radio">
+                          <label><input type="radio" name="kunci" id="a" value="A"> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci" id="b" value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci" id="c" value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci" id="d" value="D"> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci" id="e" value="E"> Jawaban <b>E</b></label>
+                        </div>
                       </div>
                     </div>
                     <div class="form-group">
@@ -128,32 +140,15 @@
                   </div>
                 </form>
               </div>
-              <div class="well" style="margin-top: 15px; display: none;" id="wrap-upload-soal">
-                {{-- <form class="form-horizontal" action="{{ url('/crud/simpan-detail-soal-via-excel') }}" enctype="multipart/form-data" method="POST">
-                  {{ csrf_field() }}
-                  <div class="box-body">
-                    <div class="form-group">
-                      <input type="file" name="file" id="file" class="inputfile" />
-                      <label for="file"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Pilih file excel</label>
-                      <p class="help-block">Silahkan pilih file format soal dalam bentuk excel yang telah diisi dengan benar.</p>
-                    </div>
-                    <div class="box-footer">
-                      <input class="btn btn-danger" id="batal-upload" type="button" value="Batal" />
-                      <input class="btn btn-primary" name="upload" type="submit" value="Import" />
-                    </div>
-                  </div>
-                </form> --}}
-              </div>
-             
+              
+              <!-- /.card -->
               <table class="table table-bordered table-striped" id="tablesoal">
                 <thead>
                   <tr>  
                     <th>NO</th>
                     <th>Instruksi</th>
-          
-                    <th style="text-align: center;">Waktu</th>
+                    <th style="text-align: center;">Kunci</th>
                     <th style="text-align: center;">Status</th>
-                
                     <th style="text-align: center;">Aksi</th>
                   </tr>
                 </thead>
@@ -161,9 +156,9 @@
                     @foreach ($soalList as $key=>$data)
                     
                     <tr>
-                        <td>{!!$loop->iteration!!}</td>
+                        <td >{!!$loop->iteration!!}</td>
                         <td  style="max-width: 400px;">{!! $data->soal !!}</td>
-                        <td>{!!$data->waktu!!}</td>
+                        <td style="text-align: center">{!!$data->kunci!!}</td>
                         <td style="text-align: center">
                           @if($data->status == 'Y')
                               <span class="btn-sm btn-success">Tampil</span>
@@ -173,8 +168,8 @@
                       </td>
                         <td style="text-align: center" class="gap-2">
           
-                            <a href="/soal/kecermatan/edit/{{$data->id}}" class="btn-sm btn-primary" >Edit</a>
-                            <a href="/soal/kecermatan/pertanyaan/detail-pertanyaan/{{$data->id}}" class="btn-sm btn-info">Detail</a>
+                            <a href="/soal/kecermatan/pertanyaan/edit/{{$data->id}}" class="btn-sm btn-primary me-1" >Edit</a>
+                     
                             <a href="javascript:void(0)" onclick="deleteSoal({{$data->id}})" class="btn-sm btn-danger">Hapus</a>
 
                           </td>
@@ -203,35 +198,37 @@
 
 <script>
     $(document).ready(function() {
+     
         $("#btn-soal").click(function() {
       $("#wrap-soal").slideToggle();
     });
-    $('.textarea').summernote({
-		toolbar: [
-						['style', ['style']],
-				    ['font', ['bold', 'italic', 'underline', 'clear']],
-				    ['fontname', ['fontname']],
-            ['fontsize', ['fontsize']],
+        $('.textarea').summernote({
+        // Opsi Summernote
+        height: 300, // Tinggi editor
+        // Konten tabel yang diinginkan
+        placeholder: 'Klik di sini untuk menambahkan konten...',
+        tabsize: 2,
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
             ['color', ['color']],
             ['para', ['ul', 'ol', 'paragraph']],
-            ['insert', ['link', 'picture', 'hr']],
-            ['view', ['fullscreen', 'codeview']]
+            ['table', ['table']],
+            ['insert', ['link', 'picture', 'video', 'hr', 'file']],
+            ['view', ['fullscreen', 'codeview', 'help']]
         ],
-        height:100,
-				fontSizes: ['8', '9', '10', '11', '12', '14', '18', '24', '36', '48' , '64', '82', '150'],
+        
         callbacks: {
-        onInit: function() {
-            var content = '<table class="table table-bordered">' +
+            onInit: function() {
+              var content = '<table class="table table-bordered">' +
                                 '<tbody>' +
-                                    '<tr><td></td><td></td><td></td><td></td><td></td></tr>' +
-                                    '<tr><td></td><td></td><td></td><td></td><td></td></tr>' +
+                                    '<tr><td></td><td></td><td></td><td></td></tr>' +
                                 '</tbody>' +
-                              '</table>';
-            $('.textarea').summernote('code', content);
+                            '</table>';
+                $('.textarea').summernote('code', content);
+            }
         }
-    }
-	});
-
+    });
 
     $("#tablesoal").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
@@ -250,7 +247,7 @@
 
         $.ajax({
           type: "POST",
-          url: "{{ url('/soal/kecermatan/index') }}",
+          url: "{{ url('/soal/kecermatan/pertanyaan/detail-pertanyaan') }}",
           data: dataString,
           headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

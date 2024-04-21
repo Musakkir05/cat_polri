@@ -15,4 +15,13 @@ class Paket extends Model
         'kkm',
         'waktu'
     ];
+    public function detailSoals()
+    {
+        return $this->hasMany(DetailSoal::class, 'id_paket');
+    }
+
+    public function jawabs()
+    {
+        return $this->hasMany(Jawab::class, 'id_paket');
+    }
 }

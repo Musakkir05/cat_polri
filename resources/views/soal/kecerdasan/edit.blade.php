@@ -95,7 +95,8 @@
                         <label><input type="radio" name="kunci2" id="b" value="B" @if($soal->kunci_jawaban2 == "B") checked @endif value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
                         <label><input type="radio" name="kunci2" id="c" value="C" @if($soal->kunci_jawaban2 == "C") checked @endif value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
                         <label><input type="radio" name="kunci2" id="d" value="D" @if($soal->kunci_jawaban2 == "D") checked @endif value="D"> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
-                        <label><input type="radio" name="kunci2" id="e" value="E" @if($soal->kunci_jawaban2 == "E") checked @endif value="E"> Jawaban <b>E</b></label>
+                        <label><input type="radio" name="kunci2" id="e" value="E" @if($soal->kunci_jawaban2 == "E") checked @endif value="E"> Jawaban <b>E</b></label>&nbsp;&nbsp;&nbsp;
+                        <label><input type="radio" name="kunci2" id="tidakAda" value="">  <b>Tidak Ada</b></label>
                       </div>
                     </div>
                   </div>
@@ -117,7 +118,7 @@
                   <div class="form-group" style="margin-top: 20px">
                     <div class="col-sm-offset-2 col-sm-10">
                       <div id="notif-soal" style="display: none;"></div>
-                      <img src="{{ url('/assets/images/facebook.gif') }}" style="display: none;" id="loading-soal">
+                      <img src="{{ url('assets/dist/img/ZKZg.gif') }}" style="display: none;" id="loading-soal">
                       <div id="wrap-btn">
                         <button type="button" class="btn btn-danger" id="batal">Batal</button>
                         <button type="button" class="btn btn-success" id="simpan-soal">Simpan</button>
@@ -191,21 +192,14 @@
     console.log(dataString);
     $.ajax({
       type: "POST",
-      url: "{{ url('/soal/aksi/edit') }}",
+      url: "{{ url('/soal/kecerdasan/update') }}",
       data: dataString,
-
-
-
-
       success: function( data){
         $("#loading-soal").hide();
         $("#wrap-btn").show();
         if (data == 'ok') {
-          $("#notif-soal").removeClass('alert alert-danger').addClass('alert alert-info').html("Soal berhasil disimpan.").show();
-          setTimeout(() => {
-            window.location.href = "{{ url('soal/detailSoal/' . $soal->id) }}";
-          }, 3000);
-
+            var successMessage = "Soal berhasil diubah.";
+    window.location.href = "{{ url('soal/detailSoal/' . $soal->id_paket) }}?success=" + encodeURIComponent(successMessage);
         }else{
           $("#notif-soal").removeClass('alert alert-info').addClass('alert alert-danger').html(data).show();
         }

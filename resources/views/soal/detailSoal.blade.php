@@ -78,14 +78,26 @@
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="col-sm-2 control-label">Kunci</label>
+                      <label class="col-sm-2 control-label">Kunci Jawaban 1</label>
                       <div class="col-sm-10">
                         <div class="radio">
-                          <label><input type="radio" name="kunci" id="a" value="A"> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="b" value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="c" value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="d" value="D"> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
-                          <label><input type="radio" name="kunci" id="e" value="E"> Jawaban <b>E</b></label>
+                          <label><input type="radio" name="kunci1" id="a" value="A"> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci1" id="b" value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci1" id="c" value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci1" id="d" value="D"> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci1" id="e" value="E"> Jawaban <b>E</b></label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Kunci jawaban 2</label>
+                      <div class="col-sm-10">
+                        <div class="radio">
+                          <label><input type="radio" name="kunci2" id="a" value="A"> Jawaban <b>A</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci2" id="b" value="B"> Jawaban <b>B</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci2" id="c" value="C"> Jawaban <b>C</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci2" id="d" value="D"> Jawaban <b>D</b></label> &nbsp;&nbsp;&nbsp;
+                          <label><input type="radio" name="kunci2" id="e" value="E"> Jawaban <b>E</b></label>
                         </div>
                       </div>
                     </div>
@@ -134,7 +146,7 @@
                 </form> --}}
               </div>
              
-              <table class="table table-bordered table-striped" id="tablesoal">
+              <table id="tablesoal" class="table table-bordered table-striped">
                 <thead>
                   <tr>  
                     <th>NO</th>
@@ -147,18 +159,24 @@
                   </tr>
                 </thead>
                 <tbody>
-                    @foreach ($SoalList as $data)
+                    @foreach ($SoalList as $key=>$data)
                     <tr>
                         <td>{!!$loop->iteration!!}</td>
                         <td>{!!$data->soal!!}</td>
                         <td>{!!$data->jenis!!}</td>
                         <td>{!!$data->kunci_jawaban!!}</td>
                         <td>{!!$data->score!!}</td>
-                        <td>{!!$data->status!!}</td>
+                        <td style="text-align: center">
+                          @if($data->status == 'Y')
+                              <span class="btn-sm btn-success">Tampil</span>
+                          @elseif($data->status == 'N')
+                              <span class="btn-sm btn-warning">Tidak Tampil</span>
+                          @endif
+                      </td>
                         <td style="text-align: center">
           
                             <a href="/soal/aksi/edit/{{$data->id}}" class="btn-sm btn-primary" >Edit</a>
-                            <a href="/edit-paket/{{$data->id}}" class="btn-sm btn-info">Detail</a>
+                            
                             <a href="javascript:void(0)" onclick="deleteSoal({{$data->id}})" class="btn-sm btn-danger">Hapus</a>
 
                           </td>
@@ -223,7 +241,7 @@
 
         $.ajax({
           type: "POST",
-          url: "{{ route("simpan_soal") }}",
+          url: "{{ url('/soal/simpan-soal') }}",
           data: dataString,
           headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

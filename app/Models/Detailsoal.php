@@ -25,4 +25,9 @@ class Detailsoal extends Model
         'paket',
         'status'
     ];
+    protected $nullable = ['pilE'];
+    public function paket()
+    {
+        return $this->belongsTo(Paket::class, 'id_paket');
+    }
 }
